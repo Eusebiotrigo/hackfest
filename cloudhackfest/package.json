@@ -1,0 +1,17 @@
+{
+  "name": "cloudhackfest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "firmata": "^0.5.5",
+    "johnny-five": "^0.8.93",
+    "request": "^2.64.0",
+    "serialport": "^1.7.4"
+  }
+}

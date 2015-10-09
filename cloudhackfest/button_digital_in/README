@@ -1,0 +1,2 @@
+Before you use node click_to_pubsub.js, please make sure you created the topic that you want to publish under. Take a look at the create_topic.js script. This step only needs to be performed once. 
+

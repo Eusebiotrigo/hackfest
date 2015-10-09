@@ -1,0 +1,5 @@
+Welcome to the CloudHackfest IoT Starter Kit!
+
+#1 Install the Arduino IDE
+#2 Connect the Arduino via the USB Cable to your laptop and install StandardFirmata: File -> Examples -> Firmata -> StandardFirmata -> hit compile and upload
+#3 run node listSerials.js to figure out the correct Path to your Serial 

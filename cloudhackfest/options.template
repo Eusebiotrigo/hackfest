@@ -1,0 +1,12 @@
+/*
+	Be sure to rename this file into options.js. 
+	Also go to builder.yaas.io, sign up and put the applications
+	client_id and client_secret as well as the projectAndApp key into 
+	the template below. 
+*/
+module.exports = {
+	client_id : "XXX",
+	client_secret : "XXX",
+	projectAndApp : "hybrislabs.photon",
+	base : "https://api.yaas.io/hybris"
+}
