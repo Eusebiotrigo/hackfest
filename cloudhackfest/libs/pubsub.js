@@ -58,7 +58,7 @@ exports.publish = function(token, topic, payload) {
 };	
 
 exports.readNext = function(token, topic) {
-	
+
 	var promise = new Promise(function(resolve, reject){
 
 		request({

@@ -10,7 +10,7 @@ oauth2.getClientCredentialsToken(['hybris.pubsub.topic='+options.projectAndApp+'
 	console.log("Got a lovely client credentials token, starting polling!");
 	setInterval(function() {
 
-	pubsub.readNext(token, options.pubsub_topic)
+	pubsub.readNext(token, options.pubsub_event)
 	.then(function(evt){
 		if (evt == undefined)
 			console.log("No event.");
