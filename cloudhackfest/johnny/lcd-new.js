@@ -1,6 +1,27 @@
 var five = require("johnny-five"),
     board, lcd;
 
+var oauth2 = require('../libs/oauth2.js');
+var options = require('../options.js');
+var products = require('../libs/products.js');
+var evt = null;
+
+oauth2.getClientCredentialsToken(['hybris.pubsub.topic=' + options.projectAndApp + '.' + options.pubsub_event])
+    .then(function (token) {
+        console.log("Got a lovely client credentials token, starting polling!");
+        products.displayProducts(token)
+            .then(function (callbackEvt) {
+                if (callbackEvt == undefined) {
+                    console.log("No event.");
+                }else {
+                    console.log(callbackEvt);
+                    evt = callbackEvt;
+
+                }
+            }, console.log);
+    }, console.log);
+
+
 board = new five.Board();
 
 board.on("ready", function() {
@@ -9,7 +30,7 @@ board.on("ready", function() {
      var r = 0;
      var g = 0;
      var b = 0;
-     var selector = 0;
+     var selector = 18;
      var index=0;
     lcd = new five.LCD({
         // LCD pin name  RS  EN  DB4 DB5 DB6 DB7
@@ -47,24 +68,28 @@ board.on("ready", function() {
     this.repl.inject({
         lcd: lcd
     });
-    rotary.scale(0, 255).on("change", function() {
+
+    rotary.scale(0, 100).on("change", function() {
         if (r<250) r++;
         else if (g<250) g++;
         else if (b<250) b++;
         else {r=10;g=10;b=20;}
-        //var r = linear(0xFF, 0xFF, this.value, 0xFF);
-        //var g = linear(0x00, 0xFF, this.value, 0x88);
-        //var b = linear(0x00, 0x00, this.value, 0xFF);
-        if ((this.value/2) > selector+2) {selector++;}
-        if ((this.value/2) < selector-2) {selector--;}
+        console.log(evt);
+        if (evt != null)     {
+            if ((this.value/2) > selector+1) {selector=Math.round(this.scale(0,100).value/2);if (index<evt.length) index++}
+            if ((this.value/2) < selector-1) {selector=Math.round(this.scale(0,100).value/2);if (index>1) index--}
+            lcd.clear();
+            lcd.cursor(0,0).print(evt[index-1].name);
+        }
+        console.log(evt);
         lcd.bgColor(r, g, b);
-        lcd.cursor(1,0).print("knob:"+ selector + "V"+this.scale(0,255).value);
-        //lcd.clear();
+        lcd.cursor(1,0).print("knob:"+ index + " V"+ selector);
 
 
-      });
 
+    });
 });
+
 function linear(start, end, step, steps) {
   return (end - start) * step / steps + start;
 }
